@@ -25,4 +25,5 @@ async function fetchUserData() {
     }
 }
 
-document.addEventListener
+// Run fetchUserData after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', fetchUserData);
