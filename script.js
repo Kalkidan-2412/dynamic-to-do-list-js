@@ -1,34 +1,53 @@
-// fetch-data.js
+// Wait for the DOM to fully load before running the script
+document.addEventListener('DOMContentLoaded', () => {
+    // Select DOM elements
+    const addButton = document.getElementById('add-task-btn');
+    const taskInput = document.getElementById('task-input');
+    const taskList = document.getElementById('task-list');
 
-// Select DOM elements for task management
-const addButton = document.getElementById('add-task');
-const taskInput = document.getElementById('task-input');
-const taskList = document.getElementById('task-list');
+    // Function to add a new task
+    function addTask() {
+        // Get and trim the input value
+        const taskText = taskInput.value.trim();
 
-async function fetchUserData() {
-    const apiUrl = 'https://jsonplaceholder.typicode.com/users';
-    const dataContainer = document.getElementById('api-data');
+        // Check if input is empty
+        if (taskText === '') {
+            alert('Please enter a task.');
+            return;
+        }
 
-    try {
-        const response = await fetch(apiUrl);
-        const users = await response.json();
+        // Create a new list item
+        const li = document.createElement('li');
+        li.textContent = taskText;
 
-        dataContainer.innerHTML = '';
+        // Create a remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'remove-btn';
 
-        const userList = document.createElement('ul');
+        // Set up the remove button functionality
+        removeBtn.onclick = () => {
+            taskList.removeChild(li);
+        };
 
-        users.forEach(user => {
-            const listItem = document.createElement('li');
-            listItem.textContent = user.name;
-            userList.appendChild(listItem);
-        });
+        // Append the button to the list item and the item to the list
+        li.appendChild(removeBtn);
+        taskList.appendChild(li);
 
-        dataContainer.appendChild(userList);
-    } catch (error) {
-        dataContainer.innerHTML = 'Failed to load user data.';
-        console.error('Error fetching user data:', error);
+        // Clear the input field
+        taskInput.value = '';
     }
-}
 
-// Run fetchUserData after the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', fetchUserData);
+    // Add task on button click
+    addButton.addEventListener('click', addTask);
+
+    // Add task on Enter key press
+    taskInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            addTask();
+        }
+    });
+
+    // Optional: Invoke addTask on DOMContentLoaded (if needed for preloaded tasks)
+    // addTask(); // Uncomment if you want to initialize with a default task
+});
