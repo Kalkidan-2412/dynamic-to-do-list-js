@@ -1,5 +1,10 @@
 // fetch-data.js
 
+// Select DOM elements for task management
+const addButton = document.getElementById('add-task');
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('task-list');
+
 async function fetchUserData() {
     const apiUrl = 'https://jsonplaceholder.typicode.com/users';
     const dataContainer = document.getElementById('api-data');
@@ -27,7 +32,3 @@ async function fetchUserData() {
 
 // Run fetchUserData after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', fetchUserData);
-// Select DOM elements
-const addButton = document.getElementById('Add-task');
-const taskInput = document.getElementById('taskInput');
-const taskList = document.getElementById('taskList');
